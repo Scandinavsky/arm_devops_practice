@@ -1,0 +1,17 @@
+{
+	"ulid": "01HEK35FH6A6GVVKYAZ99D53TG",
+	"minTime": 1699120801237,
+	"maxTime": 1699128000000,
+	"stats": {
+		"numSamples": 450970,
+		"numSeries": 4815,
+		"numChunks": 8115
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01HEK35FH6A6GVVKYAZ99D53TG"
+		]
+	},
+	"version": 1
+}

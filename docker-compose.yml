@@ -1,0 +1,81 @@
+version: '3.5'
+
+volumes:
+  grafana_storage: {}
+  prometheus_data: {}
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+    - 9090:9090
+    command:
+      - '--config.file=/prometheus/prometheus.yml'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./config:/prometheus
+      - ./data/prometheus:/data
+    depends_on:
+    - pushgateway
+    - alertmanager
+
+  node-exporter:
+    image: prom/node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --collector.filesystem.ignored-mount-points
+      - ^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)
+    ports:
+      - 9100:9100
+    restart: always
+    deploy:
+      mode: global
+
+  cadvisor:
+    image: google/cadvisor
+    ports:
+      - 9880:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      # increases the log level from info to debug
+      - GF_LOG_LEVEL=info
+    ports:
+      - '3000:3000'
+    volumes:
+      - 'grafana_storage:/var/lib/grafana'
+
+
+  pushgateway:
+    image: prom/pushgateway
+    container_name: pushgateway
+    ports:
+      - "9091:9091"
+    
+
+  alertmanager:
+    container_name: alertmanager
+    hostname: alertmanager
+    image: prom/alertmanager
+    volumes:
+      - ./config:/prometheus
+      - ./data/alertmanager:/data
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+    ports:
+      - 9093:9093

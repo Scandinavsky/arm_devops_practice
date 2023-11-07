@@ -1,0 +1,17 @@
+{
+	"ulid": "01HEK35EHQ4J8Q8DX14KYDEMWD",
+	"minTime": 1699115083855,
+	"maxTime": 1699120800000,
+	"stats": {
+		"numSamples": 3625547,
+		"numSeries": 6211,
+		"numChunks": 27648
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01HEK35EHQ4J8Q8DX14KYDEMWD"
+		]
+	},
+	"version": 1
+}
