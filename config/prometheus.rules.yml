@@ -1,0 +1,10 @@
+groups:
+- name: ./rules.conf
+  rules:
+  - alert: server_dowm
+    expr: up==0
+    for: 5s
+    labels:
+      severity: major
+    annotations:
+      summary: "server is down"

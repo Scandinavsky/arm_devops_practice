@@ -1,0 +1,17 @@
+{
+	"ulid": "01HENTNCHCMHE063Q2S26R22CB",
+	"minTime": 1699300800690,
+	"maxTime": 1699308000000,
+	"stats": {
+		"numSamples": 5765746,
+		"numSeries": 24025,
+		"numChunks": 54022
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01HENTNCHCMHE063Q2S26R22CB"
+		]
+	},
+	"version": 1
+}
